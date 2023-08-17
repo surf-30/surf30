@@ -135,3 +135,8 @@
     color: white; 
 }
 #cookieChoiceInfo {top:auto;bottom:0;}
+
+.example_responsive_1 { width: 320px; height: 100px; }
+@media(min-width: 500px) { .example_responsive_1 { width: 468px; height: 60px; } }
+@media(min-width: 800px) { .example_responsive_1 { width: 970px; height: 250px; } }
+@media(min-width: 900px) { .example_responsive_1 { width: 970px; height: 250px; } }
