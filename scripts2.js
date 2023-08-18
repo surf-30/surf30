@@ -1,7 +1,4 @@
 (function() {
-    var items = <data:post.commentJso/>;
-    var msgs = <data:post.commentMsgs/>;
-    var config = <data:post.commentConfig/>;
 // <![CDATA[
 var cursor = null;
 if (items && items.length > 0) {
