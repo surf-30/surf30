@@ -8,3 +8,202 @@
 window.selectnav=function(){"use strict";var e=function(e,t){function c(e){var t;if(!e)e=window.event;if(e.target)t=e.target;else if(e.srcElement)t=e.srcElement;if(t.nodeType===3)t=t.parentNode;if(t.value)window.location.href=t.value}function h(e){var t=e.nodeName.toLowerCase();return t==="ul"||t==="ol"}function p(e){for(var t=1;document.getElementById("selectnav"+t);t++);return e?"selectnav"+t:"selectnav"+(t-1)}function d(e){a++;var t=e.children.length,n="",l="",c=a-1;if(!t){return}if(c){while(c--){l+=o}l+=" "}for(var v=0;v<t;v++){var m=e.children[v].children[0];if(typeof m!=="undefined"){var g=m.innerText||m.textContent;var y="";if(r){y=m.className.search(r)!==-1||m.parentNode.className.search(r)!==-1?f:""}if(i&&!y){y=m.href===document.URL?f:""}n+='<option value="'+m.href+'" '+y+">"+l+g+"</option>";if(s){var b=e.children[v].children[1];if(b&&h(b)){n+=d(b)}}}}if(a===1&&u){n='<option value="">'+u+"</option>"+n}if(a===1){n='<select class="selectnav" id="'+p(true)+'">'+n+"</select>"}a--;return n}e=document.getElementById(e);if(!e){return}if(!h(e)){return}if(!("insertAdjacentHTML"in window.document.documentElement)){return}document.documentElement.className+=" js";var n=t||{},r=n.activeclass||"active",i=typeof n.autoselect==="boolean"?n.autoselect:true,s=typeof n.nested==="boolean"?n.nested:true,o=n.indent||"-",u=n.label||"Menu",a=0,f=" selected ";e.insertAdjacentHTML("afterend",d(e));var l=document.getElementById(p());if(l.addEventListener){l.addEventListener("change",c)}if(l.attachEvent){l.attachEvent("onchange",c)}return l};return function(t,n){e(t,n)}}();$(document).ready(function(){selectnav('nav');selectnav('nav1');});
 // Simple Tab JQuery Plugin by Taufik Nurrohman - https://plus.google.com/108949996304093815163/about
 (function(a){a.fn.simplyTab=function(b){b=jQuery.extend({active:1,fx:null,showSpeed:400,hideSpeed:400,showEasing:null,hideEasing:null,show:function(){},hide:function(){},change:function(){}},b);return this.each(function(){var e=a(this),c=e.children("[data-tab]"),d=b.active-1;e.addClass("simplyTab").prepend('<ul class="wrap-tab"></ul>');c.addClass("content-tab").each(function(){a(this).hide();e.find(".wrap-tab").append('<li><a href="#">'+a(this).data("tab")+"</a></li>")}).eq(d).show();e.find(".wrap-tab a").on("click",function(){var f=a(this).parent().index();a(this).closest(".wrap-tab").find(".activeTab").removeClass("activeTab");a(this).addClass("activeTab");if(b.fx=="slide"){if(c.eq(f).is(":hidden")){c.slideUp(b.hideSpeed,b.hideEasing,function(){b.hide.call(e)}).eq(f).slideDown(b.showSpeed,b.showEasing,function(){b.show.call(e)})}}else{if(b.fx=="fade"){if(c.eq(f).is(":hidden")){c.hide().eq(f).fadeIn(b.showSpeed,b.showEasing,function(){b.show.call(e)})}}else{if(b.fx=="fancyslide"){if(c.eq(f).is(":hidden")){c.slideUp(b.hideSpeed,b.hideEasing,function(){b.hide.call(e)}).eq(f).delay(b.hideSpeed).slideDown(b.showSpeed,b.showEasing,function(){b.show.call(e)})}}else{if(c.eq(f).is(":hidden")){c.hide().eq(f).show()}}}}b.change.call(e);return false}).eq(d).addClass("activeTab")})}})(jQuery);
+$(".ticker .HTML .widget-content").each(function() {
+  var b = $(this).find("span").attr("data-no") || "",
+  v = $(this).find("span").attr("data-label") || "",
+  box = $(this).find("span").attr("data-type") || "";
+
+
+  if ( box != undefined && box.match('recent')) {
+    $.ajax({
+      url: "https://www.surf30.net/feeds/posts/default?alt=json-in-script&max-results=" + b,
+      type: 'get',
+      dataType: "jsonp",
+      success: function(e) {
+        var u = "";
+        var h = '<ul>';
+        for (var i = 0; i < e.feed.entry.length; i++) {
+          for (var j = 0; j < e.feed.entry[i].link.length; j++) {
+            if (e.feed.entry[i].link[j].rel == "alternate") {
+              u = e.feed.entry[i].link[j].href;
+              break
+            }
+          }
+          var g = e.feed.entry[i].title.$t;
+          var s = e.feed.entry[i].category[0].term;
+          var c = e.feed.entry[i].content.$t;
+          var $c = $('<div>').html(c);
+          if (c.indexOf("//www.youtube.com/embed/") > -1) {
+            var p = e.feed.entry[i].media$thumbnail.url.replace('/default.jpg', '/mqdefault.jpg');
+            var k = p
+          } else if (c.indexOf("<img") > -1) {
+            var q = $c.find('img:first').attr('src').replace('s72-c', 's1600');
+            var k = q
+          } else {
+            var k = NO_IMAGE
+          }
+          h += '<li><div class="tk-thumb"><a class="tk-img" href="' + u + '" style="background:url(' + k + ') no-repeat center center;background-size: cover"><span class="tyimg-lay"/></a></div><a href="/search/label/' + s + '" class="post-tag icon ' + s + '">' + s + '</a><h3 class="tyard-title"><a href="' + u + '">' + g + '</a></h3></li>'
+        }
+        h += '</ul>';
+        $(".ticker .widget-content").each(function() {
+          $(this).html(h);
+          $(this).prev('h2').wrapInner('<span></span>');
+          $(this).prev('h2').prepend('<i class="fa fa-fire"></i>');
+          $(this).find('ul').webTicker()
+        })
+      }
+    })
+  } else if ( box != undefined && box.match('label')) {
+    $.ajax({
+      url: "https://www.surf30.net/feeds/posts/default/-/" + v + "?alt=json-in-script&max-results=" + b,
+      type: 'get',
+      dataType: "jsonp",
+      success: function(e) {
+        var u = "";
+        var h = '<ul>';
+        for (var i = 0; i < e.feed.entry.length; i++) {
+          for (var j = 0; j < e.feed.entry[i].link.length; j++) {
+            if (e.feed.entry[i].link[j].rel == "alternate") {
+              u = e.feed.entry[i].link[j].href;
+              break
+            }
+          }
+          var g = e.feed.entry[i].title.$t;
+          var s = e.feed.entry[i].category[0].term;
+          var c = e.feed.entry[i].content.$t;
+          var $c = $('<div>').html(c);
+          if (c.indexOf("//www.youtube.com/embed/") > -1) {
+            var p = e.feed.entry[i].media$thumbnail.url.replace('/default.jpg', '/mqdefault.jpg');
+            var k = p
+          } else if (c.indexOf("<img") > -1) {
+            var q = $c.find('img:first').attr('src').replace('s72-c', 's1600');
+            var k = q
+          } else {
+            var k = NO_IMAGE
+          }
+          h += '<li><div class="tk-thumb"><a class="tk-img" href="' + u + '" style="background:url(' + k + ') no-repeat center center;background-size: cover"><span class="tyimg-lay"/></a></div><a href="/search/label/' + s + '" class="post-tag icon ' + s + '">' + s + '</a><h3 class="tyard-title"><a href="' + u + '">' + g + '</a></h3></li>'
+        }
+        h += '</ul>';
+        $(".ticker .HTML .widget-content").each(function() {
+          $(this).html(h);
+          $(this).prev('h2').wrapInner('<span></span>');
+          $(this).prev('h2').prepend('<i class="fa fa-fire"></i>');
+          $(this).find('ul').webTicker()
+        })
+      }
+    })
+  }
+});
+/* Slider Widget
+--------------------------------------*/
+var slider = $('#blog_featured_posts .widget-content');
+var sliderContent = slider.text().trim();
+function getPostUrl(entry) {
+  for (var k = 0; k < entry.link.length; k++) {
+    if (entry.link[k].rel == 'alternate') {
+      var posturl = entry.link[k].href;
+      return posturl;
+    }
+  }
+}
+function getPostPublishDate(entry) {
+  var postdate = entry.published.$t,
+  day = postdate.split("-")[2].substring(0,2),
+  m = postdate.split("-")[1],
+  y = postdate.split("-")[0],
+  months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+  month = months[m-1],
+  daystr = day + ' de ' + month + ' de ' + y;
+  daystr = ' ';
+  return postdate ? daystr : "";
+}
+function getPostCategory(entry) {
+  var post_category = entry.category;
+  if(post_category) {
+    post_category = entry.category[0].term;
+  }
+  var category = '<div class="category-wrapper"><a class="category" href="/search/label/'+ post_category +'?max-results=10">'+ post_category +'</a></div>';
+  return post_category ? category : "";
+}
+function Slider(e) {
+  var img = new Array(),
+  trtd= '',
+  numOfEntries = e.feed.entry.length;
+  for (var i = 0; i < numOfEntries; i++) {
+    var entry = e.feed.entry[i];
+    var posttitle = entry.title.$t;
+    var posturl = getPostUrl(entry);
+    var author = entry.author[0].name.$t;
+    var daystr = getPostPublishDate(entry);
+    var category = getPostCategory(entry);
+    var tag = entry.category[0].term;
+    var c = e.feed.entry[i].content.$t;
+    var $c = $('<div>').html(c);
+    if (c.indexOf("//www.youtube.com/embed/") > -1) {
+      var p = e.feed.entry[i].media$thumbnail.url;
+      var postimage = p
+    } else if (c.indexOf("<img") > -1) {
+      var q = $c.find('img:first').attr('src');
+      var postimage = q.replace('s16000', 's800');
+    } else {
+      var postimage = NO_IMAGE
+    }
+    if (i == 0) {
+      trtd = trtd + '<div class="blog_featured_first_con"><div class="blog_featured_post first"><a href="' + posturl + '"><div class="blog_contents"><span style="background-color:#5AA628">'+ tag +'</span><span>' + daystr + '</span><h3>' + posttitle + '</h3></div><div class="feat-img" style="background-image:url(' + postimage + ');"></div></a></div>';
+    }
+
+
+    if (i == 1) {
+      trtd = trtd + '<div class="blog_featured_post second"><a href="' + posturl + '"><div class="blog_contents"><span style="background-color:#FFA905; ">'+ tag +'</span><span>' + daystr + '</span><h3>' + posttitle + '</h3></div><div class="feat-img" style="background-image:url(' + postimage + ');"></div></a></div></div><div class="clear"></div>';
+    }
+
+    if (i == 2) {
+      trtd = trtd + '<div class="blog_featured_rest_con"><div class="blog_featured_post third"><a href="' + posturl + '"><div class="blog_contents"><span style="background-color:#20C1DD; ">'+ tag +'</span><span>' + daystr + '</span><h3>' + posttitle + '</h3></div><div class="feat-img" style="background-image:url(' + postimage + ');"></div></a></div>';
+    }
+
+    if (i == 3) {
+      trtd = trtd + '<div class="blog_featured_post fourth"><a href="' + posturl + '"><div class="blog_contents"><span style="background-color:#F04A3C; ">'+ tag +'</span><span>' + daystr + '</span><h3>' + posttitle + '</h3></div><div class="feat-img" style="background-image:url(' + postimage + ');"></div></a></div>';
+    }
+
+    if (i == 4) {
+      trtd = trtd + '<div class="blog_featured_post fifth"><a href="' + posturl + '"><div class="blog_contents"><span style="background-color:#e040fb; ">'+ tag +'</span><span>' + daystr + '</span><h3>' + posttitle + '</h3></div><div class="feat-img" style="background-image:url(' + postimage + ');"></div></a></div></div>';
+    }
+  }
+  slider.html('<div class="blog_featured_posts">' + trtd + '</div>');
+  $('.blog_featured_posts').find('.feat-img').each(function() {
+    $(this).attr('style', function(i, src) {
+      return src.replace('/default.jpg', '/mqdefault.jpg')
+    }).attr('style', function(i, src) {
+      return src.replace('s72-c', 's1600')
+    }).attr('style', function(i, src) {
+      return src.replace('s320', 's1600')
+    }).attr('style', function(i, src) {
+      return src.replace('s400', 's1600')
+    }).attr('style', function(i, src) {
+      return src.replace('s640', 's1600')
+    })
+  });
+} // function Slider(e)
+if((sliderContent.toLowerCase().trim() !== 'no') && (sliderContent.toLowerCase() !== '"no"') && (sliderContent !== '')) {
+  if(sliderContent !== "[recent]") {
+    $.ajax({
+      url: "https://www.surf30.net/feeds/posts/default/-/"+ sliderContent +"?alt=json-in-script&max-results=5",
+      type: "get",
+      dataType: "jsonp",
+      success: function (e) {
+        Slider(e);
+      }
+    });
+  } else {
+    $.ajax({
+      url: "https://www.surf30.net/feeds/posts/default?alt=json-in-script&max-results=5",
+      type: "get",
+      dataType: "jsonp",
+      success: function (e) {
+        Slider(e);
+      }
+    });
+  }
+} else {
+  $("#slider").remove();
+}
