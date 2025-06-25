@@ -1,5 +1,6 @@
 /* Estilos principales optimizados desde <b:skin> del tema PixelZ */
 
+/* Variables visuales para Blogger */
 :root {
   --color-theme: #4db2ec;
   --background-body: #ffffff;
@@ -14,8 +15,9 @@
   --color-widget-heading: #fff;
 }
 
+/* Fondo base definido para cumplir con los 6 parámetros que exige Blogger */
 body {
-  background: var(--background-body);
+  background: var(--background-body) url(none) repeat scroll top left;
   color: var(--color-text);
   font-size: 14px;
   font-family: var(--font-base);
