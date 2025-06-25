@@ -1,10 +1,24 @@
 /* Estilos principales optimizados desde <b:skin> del tema PixelZ */
 
+:root {
+  --color-theme: #4db2ec;
+  --background-body: #ffffff;
+  --color-header: #302f34;
+  --font-base: 'Open Sans', sans-serif;
+  --font-heading: 'Roboto', sans-serif;
+  --font-title: 'Montserrat', sans-serif;
+  --color-text: #222;
+  --color-link: #4db2ec;
+  --color-footer-bg: #242328;
+  --color-footer-text: #aaa;
+  --color-widget-heading: #fff;
+}
+
 body {
-  background: #ffffff;
-  color: #222;
+  background: var(--background-body);
+  color: var(--color-text);
   font-size: 14px;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--font-base);
   line-height: 22px;
   padding: 0;
   word-wrap: break-word;
@@ -16,7 +30,7 @@ body {
 }
 
 a {
-  color: #4db2ec;
+  color: var(--color-link);
   text-decoration: none;
 }
 
@@ -27,7 +41,7 @@ a:hover {
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--font-heading);
 }
 
 img {
@@ -63,14 +77,14 @@ img {
   color: #ccc;
   text-transform: uppercase;
   font-size: 11px;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--font-base);
   padding: 0 10px;
   display: inline-block;
   transition: all 0.35s ease-in-out;
 }
 
 #nav1 li a:hover {
-  color: #4db2ec;
+  color: var(--color-theme);
 }
 
 /* Header */
@@ -88,18 +102,18 @@ img {
 
 /* Post */
 .post-title a {
-  color: #222;
+  color: var(--color-text);
   font-size: 22px;
   font-weight: 700;
-  font-family: 'Montserrat';
+  font-family: var(--font-title);
 }
 
 .post-title a:hover {
-  color: #4db2ec;
+  color: var(--color-theme);
 }
 
 .post-body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--font-base);
   text-align: justify;
   font-size: 15px;
   line-height: 1.5em;
@@ -107,8 +121,8 @@ img {
 
 /* Footer */
 .footer-wrapper {
-  background-color: #242328;
-  color: #aaa;
+  background-color: var(--color-footer-bg);
+  color: var(--color-footer-text);
   padding: 15px 0;
   font-size: 12px;
 }
@@ -118,7 +132,7 @@ img {
 }
 
 .footer-wrapper a:hover {
-  color: #4db2ec;
+  color: var(--color-theme);
 }
 
 /* Widgets */
@@ -141,8 +155,8 @@ img {
   font-size: 14px;
   text-transform: uppercase;
   font-weight: 900;
-  color: #fff;
-  background-color: #4db2ec;
+  color: var(--color-widget-heading);
+  background-color: var(--color-theme);
   padding: 5px 10px;
 }
 
