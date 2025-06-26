@@ -1,26 +1,37 @@
 /* Estilos principales optimizados desde <b:skin> del tema PixelZ */
 
-/* Variables visuales para Blogger */
+/* =============================== */
+/* VARIABLES CSS PERSONALIZABLES */
+/* =============================== */
 :root {
-  --color-theme: #4db2ec;
-  --background-body: #ffffff;
-  --color-header: #302f34;
-  --font-base: 'Open Sans', sans-serif;
-  --font-heading: 'Roboto', sans-serif;
-  --font-title: 'Montserrat', sans-serif;
-  --color-text: #222;
-  --color-link: #4db2ec;
+  /* Colores principales */
+  --color-theme: #4db2ec;         /* Color principal del tema */
+  --color-header: #302f34;        /* Color de fondo del header */
+  --color-text: #222222;          /* Color del texto general */
+  --color-links: #4db2ec;         /* Color de los enlaces */
+
+  /* Fondo del cuerpo */
+  --background-body: #ffffff;     /* Color de fondo del sitio */
+
+  /* Tipografías */
+  --font-body: 'Open Sans', sans-serif;       /* Fuente del cuerpo del texto */
+  --font-heading: 'Roboto', sans-serif;       /* Fuente de encabezados */
+  --font-title: 'Montserrat', sans-serif;     /* Fuente de títulos */
+
+  /* Footer y widgets */
   --color-footer-bg: #242328;
   --color-footer-text: #aaa;
   --color-widget-heading: #fff;
 }
 
-/* Fondo base definido para cumplir con los 6 parámetros que exige Blogger */
+/* ======================== */
+/* ESTILOS BASE Y ESTRUCTURA */
+/* ======================== */
 body {
   background: var(--background-body) url(none) repeat scroll top left;
   color: var(--color-text);
   font-size: 14px;
-  font-family: var(--font-base);
+  font-family: var(--font-body);
   line-height: 22px;
   padding: 0;
   word-wrap: break-word;
@@ -32,7 +43,7 @@ body {
 }
 
 a {
-  color: var(--color-link);
+  color: var(--color-links);
   text-decoration: none;
 }
 
@@ -62,7 +73,9 @@ img {
   background-color: #fff;
 }
 
-/* Navbar */
+/* ===================== */
+/* NAVEGACIÓN SUPERIOR */
+/* ===================== */
 #topnav {
   background-color: #262626;
   height: 36px;
@@ -79,7 +92,7 @@ img {
   color: #ccc;
   text-transform: uppercase;
   font-size: 11px;
-  font-family: var(--font-base);
+  font-family: var(--font-body);
   padding: 0 10px;
   display: inline-block;
   transition: all 0.35s ease-in-out;
@@ -89,7 +102,9 @@ img {
   color: var(--color-theme);
 }
 
-/* Header */
+/* ============ */
+/* ENCABEZADO */
+/* ============ */
 .header-logo img {
   height: 100%;
   max-width: 100%;
@@ -102,7 +117,9 @@ img {
   font-family: 'Mogra', cursive;
 }
 
-/* Post */
+/* ============ */
+/* PUBLICACIÓN */
+/* ============ */
 .post-title a {
   color: var(--color-text);
   font-size: 22px;
@@ -115,13 +132,15 @@ img {
 }
 
 .post-body {
-  font-family: var(--font-base);
+  font-family: var(--font-body);
   text-align: justify;
   font-size: 15px;
   line-height: 1.5em;
 }
 
-/* Footer */
+/* ============ */
+/* PIE DE PÁGINA */
+/* ============ */
 .footer-wrapper {
   background-color: var(--color-footer-bg);
   color: var(--color-footer-text);
@@ -137,7 +156,9 @@ img {
   color: var(--color-theme);
 }
 
-/* Widgets */
+/* ============ */
+/* WIDGETS */
+/* ============ */
 .widget img {
   max-width: 100%;
   height: auto;
@@ -162,7 +183,9 @@ img {
   padding: 5px 10px;
 }
 
-/* Responsive */
+/* ======================== */
+/* RESPONSIVE DESIGN */
+/* ======================== */
 @media screen and (max-width: 768px) {
   .container, .sidebar-wrapper {
     width: 100%;
