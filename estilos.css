@@ -1095,13 +1095,6 @@ pre .cl {
     clear: both
 }
 
-.widget .post-body ol {
-    padding: 0 0 0 15px
-}
-
-.post-body ul li {
-    list-style: none
-}
 
 .embed-container {
     position: relative;
